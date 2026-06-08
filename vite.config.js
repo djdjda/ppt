@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 
-export default defineConfig({
-  plugins: [],
+const config = defineConfig({
   base: './',
   server: {
     host: '::',
@@ -20,5 +19,9 @@ export default defineConfig({
         404: resolve(__dirname, '404.html')
       }
     }
-  }
+  },
 })
+
+config.plugins = []
+
+export default config
