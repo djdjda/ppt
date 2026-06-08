@@ -1,0 +1,475 @@
+/* Font imports are dynamically added in index.html based on fontTitle/fontBody configuration */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body, 'Noto Sans SC, sans-serif');
+    overflow: hidden;
+    background: #0a0e1a;
+}
+
+/* Font family utility classes */
+.font-title {
+    font-family: var(--font-title, 'Noto Sans SC', sans-serif);
+}
+
+.font-body {
+    font-family: var(--font-body, 'Noto Sans SC', sans-serif);
+}
+
+/* ===== 原神色彩系统 ===== */
+:root {
+    --genshin-anemo: #74c2a8;
+    --genshin-geo: #f5b723;
+    --genshin-electro: #b07cd8;
+    --genshin-dendro: #a5c83b;
+    --genshin-hydro: #4cc2f1;
+    --genshin-pyro: #ef7938;
+    --genshin-cryo: #9fd6e3;
+    --genshin-gold: #d4a853;
+    --genshin-gold-light: #f0d48a;
+    --genshin-dark: #1a1a2e;
+    --genshin-dark-card: rgba(30, 30, 55, 0.85);
+    --genshin-border: rgba(212, 168, 83, 0.3);
+    --genshin-text: #e8e0d0;
+    --genshin-text-dim: #9a8e7a;
+}
+
+/* ===== PPT 容器 ===== */
+.ppt-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    /* Canvas 背景层在下方 */
+}
+
+.ppt-viewport {
+    width: 1440px;
+    height: 810px;
+    position: relative;
+    background: transparent;
+    overflow: visible;
+    transform-origin: center center;
+    flex-shrink: 0;
+    z-index: 1;
+}
+
+.ppt-viewport > .slide {
+    visibility: hidden;
+}
+
+/* ===== 幻灯片切换动画 - 元素爆发风格 ===== */
+.slide {
+    width: 1440px;
+    height: 810px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: scale(0.92);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.7s;
+    filter: blur(6px) brightness(0.6);
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s;
+    filter: blur(0px) brightness(1);
+}
+
+.slide.slide-prev {
+    transform: scale(0.92) translateX(-40px);
+}
+
+/* ===== 幻灯片内元素入场动画 ===== */
+.slide.active .slide-bg {
+    animation: slideBgIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* 原神风卡片逐个入场 */
+.slide.active [class*="bg-"][class*="rounded-xl"],
+.slide.active [class*="bg-"][class*="rounded-lg"],
+.slide.active [class*="border-"][class*="rounded-xl"],
+.slide.active [class*="border-"][class*="rounded-lg"] {
+    animation: genshinCardEnter 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(var(--card-delay, 0) * 0.12s + 0.15s);
+    opacity: 0;
+    transform: translateY(25px) scale(0.96);
+}
+
+@keyframes genshinCardEnter {
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* 标题入场 - 金色光泽 */
+.slide.active h2,
+.slide.active h1 {
+    animation: genshinTitleEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.05s;
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+@keyframes genshinTitleEnter {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* SVG 渐现 */
+.slide.active svg {
+    animation: svgFadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.35s;
+    opacity: 0;
+}
+
+@keyframes svgFadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* 元素徽章入场 */
+.slide.active [class*="rounded-full"][class*="bg-"] {
+    animation: elementBadgeEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.1s;
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+@keyframes elementBadgeEnter {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 分隔线动画 - 金色展开 */
+.slide.active [class*="bg-gradient-to-r"][class*="from-transparent"] {
+    animation: goldenLineExpand 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: 0.2s;
+    transform: scaleX(0);
+}
+
+@keyframes goldenLineExpand {
+    to {
+        transform: scaleX(1);
+    }
+}
+
+/* 脉冲元素圆点 */
+.slide.active [class*="animate-pulse"] {
+    animation: elementPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes elementPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.6); }
+}
+
+@keyframes slideBgIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ===== 原神风卡片样式 ===== */
+/* 毛玻璃 + 金边 */
+.slide [class*="bg-"][class*="rounded-xl"],
+.slide [class*="border-"][class*="rounded-xl"],
+.slide [class*="bg-"][class*="rounded-lg"],
+.slide [class*="border-"][class*="rounded-lg"] {
+    backdrop-filter: blur(16px) saturate(1.3);
+    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    border-color: rgba(212, 168, 83, 0.15) !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.slide [class*="rounded-xl"]:hover,
+.slide [class*="rounded-lg"]:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 8px 32px rgba(212, 168, 83, 0.1),
+        0 0 0 1px rgba(212, 168, 83, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border-color: rgba(212, 168, 83, 0.35) !important;
+}
+
+/* ===== 原神角色装饰 ===== */
+.genshin-char {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.genshin-char-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(30, 30, 55, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(212, 168, 83, 0.3);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--genshin-gold-light);
+    font-family: 'Noto Sans SC', sans-serif;
+    white-space: nowrap;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+
+.genshin-char-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+/* 元素图标 */
+.element-anemo { background: linear-gradient(135deg, #74c2a8, #4aa88a); box-shadow: 0 0 8px rgba(116,194,168,0.4); }
+.element-geo { background: linear-gradient(135deg, #f5b723, #d4a017); box-shadow: 0 0 8px rgba(245,183,35,0.4); }
+.element-electro { background: linear-gradient(135deg, #b07cd8, #8a5cbf); box-shadow: 0 0 8px rgba(176,124,216,0.4); }
+.element-dendro { background: linear-gradient(135deg, #a5c83b, #7da325); box-shadow: 0 0 8px rgba(165,200,59,0.4); }
+.element-hydro { background: linear-gradient(135deg, #4cc2f1, #2ba3d4); box-shadow: 0 0 8px rgba(76,194,241,0.4); }
+.element-pyro { background: linear-gradient(135deg, #ef7938, #d45a1f); box-shadow: 0 0 8px rgba(239,121,56,0.4); }
+.element-cryo { background: linear-gradient(135deg, #9fd6e3, #7bbfd0); box-shadow: 0 0 8px rgba(159,214,227,0.4); }
+
+/* ===== 数学公式原神发光 ===== */
+.slide [class*="font-mono"][class*="text-cyan"],
+.slide [class*="font-mono"][class*="text-blue"],
+.slide [class*="font-mono"][class*="text-green"],
+.slide [class*="font-mono"][class*="text-purple"],
+.slide [class*="font-mono"][class*="text-amber"],
+.slide [class*="font-mono"][class*="text-orange"],
+.slide [class*="font-mono"][class*="text-yellow"],
+.slide [class*="font-mono"][class*="text-red"],
+.slide [class*="font-mono"][class*="text-indigo"] {
+    text-shadow: 0 0 10px currentColor;
+}
+
+/* ===== 渐变文字 ===== */
+.slide [class*="bg-clip-text"] {
+    background-size: 200% auto;
+    animation: genshinGradient 5s ease infinite;
+}
+
+@keyframes genshinGradient {
+    0% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+    100% { background-position: 0% center; }
+}
+
+/* ===== 进度条 - 树脂风格 ===== */
+.progress-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(212, 168, 83, 0.05);
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--genshin-geo), var(--genshin-electro), var(--genshin-geo));
+    background-size: 200% 100%;
+    animation: resinFlow 3s ease infinite;
+    transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 0 2px 2px 0;
+    box-shadow: 0 0 10px rgba(245, 183, 35, 0.5);
+}
+
+@keyframes resinFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ===== 导航按钮 - 元素风格 ===== */
+.nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(30, 30, 55, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 168, 83, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--genshin-gold);
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-btn:hover {
+    background: rgba(212, 168, 83, 0.12);
+    border-color: rgba(212, 168, 83, 0.5);
+    color: var(--genshin-gold-light);
+    box-shadow: 0 0 24px rgba(212, 168, 83, 0.2);
+    transform: translateY(-50%) scale(1.12);
+}
+
+.nav-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.nav-btn:disabled {
+    opacity: 0.15;
+    cursor: not-allowed;
+}
+
+.nav-btn:disabled:hover {
+    transform: translateY(-50%) scale(1);
+    background: rgba(30, 30, 55, 0.6);
+    border-color: rgba(212, 168, 83, 0.2);
+    color: var(--genshin-gold);
+    box-shadow: none;
+}
+
+.nav-btn-prev {
+    left: 28px;
+}
+
+.nav-btn-next {
+    right: 28px;
+}
+
+/* ===== 页码指示器 - 冒险等阶 ===== */
+.page-indicator {
+    position: fixed;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(30, 30, 55, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(212, 168, 83, 0.15);
+    color: var(--genshin-gold);
+    padding: 6px 22px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    z-index: 1000;
+    display: block;
+    font-family: 'Montserrat', monospace;
+    transition: all 0.3s ease;
+}
+
+.page-indicator:hover {
+    background: rgba(30, 30, 55, 0.85);
+    border-color: rgba(212, 168, 83, 0.35);
+    color: var(--genshin-gold-light);
+}
+
+/* ===== 键盘导航提示 ===== */
+.keyboard-hint {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(30, 30, 55, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(212, 168, 83, 0.1);
+    color: rgba(212, 168, 83, 0.6);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 12px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.keyboard-hint.show {
+    opacity: 1;
+}
+
+/* ===== 幻灯片外框 - 原神金色描边 ===== */
+.slide > div:first-child {
+    box-shadow:
+        0 0 0 1px rgba(212, 168, 83, 0.08),
+        0 20px 60px -20px rgba(0, 0, 0, 0.5),
+        0 0 80px -30px rgba(212, 168, 83, 0.06);
+    border-radius: 16px;
+}
+
+/* ===== 原神装饰角标 ===== */
+.genshin-corner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.genshin-corner-tl { top: 8px; left: 8px; border-top: 2px solid var(--genshin-gold); border-left: 2px solid var(--genshin-gold); }
+.genshin-corner-tr { top: 8px; right: 8px; border-top: 2px solid var(--genshin-gold); border-right: 2px solid var(--genshin-gold); }
+.genshin-corner-bl { bottom: 8px; left: 8px; border-bottom: 2px solid var(--genshin-gold); border-left: 2px solid var(--genshin-gold); }
+.genshin-corner-br { bottom: 8px; right: 8px; border-bottom: 2px solid var(--genshin-gold); border-right: 2px solid var(--genshin-gold); }
+
+/* ===== 提瓦特星空 Canvas 淡入 ===== */
+#teyvat-bg {
+    opacity: 0;
+    animation: teyvatBgFadeIn 2s ease forwards;
+}
+
+@keyframes teyvatBgFadeIn {
+    to { opacity: 1; }
+}
+
+/* ===== 无障碍降级 ===== */
+@media (prefers-reduced-motion: reduce) {
+    .slide {
+        transition: opacity 0.3s ease, visibility 0s 0.3s;
+        transform: none !important;
+        filter: none !important;
+    }
+    .slide.active {
+        transition: opacity 0.3s ease, visibility 0s;
+        transform: none !important;
+        filter: none !important;
+    }
+    .progress-bar-fill { animation: none !important; }
+    #teyvat-bg { animation: none !important; opacity: 1 !important; }
+    .slide.active h2,
+    .slide.active h1,
+    .slide.active svg,
+    .slide.active [class*="rounded-xl"],
+    .slide.active [class*="rounded-lg"],
+    .slide.active [class*="rounded-full"],
+    .slide.active [class*="bg-clip-text"],
+    .slide.active [class*="animate-pulse"] {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
