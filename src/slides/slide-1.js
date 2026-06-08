@@ -46,5 +46,8 @@ window.slideDataMap.set(1, `
         </div>
       </div>
     </div>
+    <!-- MyGO 角色 -->
+    <div class="mygo-char mygo-char-left"><img src="/characters/saki-smile.png" alt="saki"></div>
+    <div class="mygo-char mygo-char-right"><img src="/characters/saki-wave.png" alt="saki"></div>
   </div>
 `);

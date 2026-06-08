@@ -168,5 +168,8 @@ window.slideDataMap.set(4, `
         </div>
       </div>
     </div>
+    <!-- MyGO 角色 -->
+    <div class="mygo-char" style="left:1.5%;top:25%;"><img src="/characters/umiri-sailor.png" alt="umiri"></div>
+    <div class="mygo-char" style="right:1.5%;top:55%;"><img src="/characters/umiri-closed.png" alt="umiri"></div>
   </div>
 `);

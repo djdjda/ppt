@@ -84,5 +84,7 @@ window.slideDataMap.set(9, `
         </div>
       </div>
     </div>
+    <!-- MyGO 角色 -->
+    <div class="mygo-char mygo-char-right"><img src="/characters/saki-sad.png" alt="saki"></div>
   </div>
 `);

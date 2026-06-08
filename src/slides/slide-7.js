@@ -224,5 +224,8 @@ window.slideDataMap.set(7, `
         </div>
       </div>
     </div>
+    <!-- MyGO 角色 -->
+    <div class="mygo-char" style="left:50%;bottom:15%;transform:translateX(-50%);"><img src="/characters/rana-excited.png" alt="rana"></div>
+    <div class="mygo-char" style="right:1.5%;top:30%;"><img src="/characters/rana-smile.png" alt="rana"></div>
   </div>
 `);

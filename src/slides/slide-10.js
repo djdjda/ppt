@@ -36,5 +36,7 @@ window.slideDataMap.set(10, `
         <div class="w-2 h-2 rounded-full animate-pulse" style="background: #b07cd8; animation-delay: 0.4s;"></div>
       </div>
     </div>
+    <!-- MyGO 角色 -->
+    <div class="mygo-char mygo-char-right"><img src="/characters/saki-wow.png" alt="saki"></div>
   </div>
 `);

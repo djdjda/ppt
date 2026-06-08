@@ -115,7 +115,6 @@ window.slideDataMap.set(5, `
 
             <!-- 次对角线高亮 -->
             <line x1="113" y1="15" x2="337" y2="234" stroke="#f5b723" stroke-width="2" stroke-dasharray="6,3" opacity="0.5"/>
-            <text x="370" y="130" fill="#f5b723" font-size="11" font-weight="bold" font-family="monospace">D(i,i+1)=i</text>
 
             <!-- 规律总结 -->
             <rect x="30" y="320" width="360" height="45" rx="8" fill="rgba(245,183,35,0.08)" stroke="rgba(245,183,35,0.3)" stroke-width="1"/>
@@ -172,5 +171,8 @@ window.slideDataMap.set(5, `
         </div>
       </div>
     </div>
+    <!-- MyGO 角色 -->
+    <div class="mygo-char" style="left:1.5%;top:80%;"><img src="/characters/mutsumi-smile.png" alt="mutsumi"></div>
+    <div class="mygo-char" style="right:1.5%;top:42%;"><img src="/characters/mutsumi-pout.png" alt="mutsumi"></div>
   </div>
 `);

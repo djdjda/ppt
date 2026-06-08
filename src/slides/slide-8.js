@@ -136,5 +136,8 @@ window.slideDataMap.set(8, `
         </div>
       </div>
     </div>
+    <!-- MyGO 角色 -->
+    <div class="mygo-char" style="left:1.5%;top:55%;"><img src="/characters/rana-peek.png" alt="rana"></div>
+    <div class="mygo-char" style="right:1.5%;top:30%;"><img src="/characters/rana-shock.png" alt="rana"></div>
   </div>
 `);

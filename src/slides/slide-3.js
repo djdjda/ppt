@@ -178,5 +178,7 @@ window.slideDataMap.set(3, `
         </div>
       </div>
     </div>
+    <!-- MyGO 角色 -->
+    <div class="mygo-char" style="right:1.5%;top:28%;"><img src="/characters/uika-pout.png" alt="uika"></div>
   </div>
 `);

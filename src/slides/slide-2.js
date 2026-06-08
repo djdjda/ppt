@@ -117,5 +117,7 @@ window.slideDataMap.set(2, `
         </div>
       </div>
     </div>
+    <!-- MyGO 角色 -->
+    <div class="mygo-char" style="right:1.5%;top:35%;"><img src="/characters/nyamu-smile.png" alt="nyamu"></div>
   </div>
 `);
